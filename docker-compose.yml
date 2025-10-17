@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  dvc-http-remote:
+    image: nginx:alpine
+    container_name: dvc-http-remote
+    restart: unless-stopped
+    ports:
+      - "8282:80"           # 访问地址 http://localhost:8080/
+    volumes:
+      - ./data:/srv/dvc-storage         # 存放 DVC 数据的目录
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./htpasswd:/etc/nginx/.htpasswd:ro   # 如果需要 Basic Auth，可以放这个文件
+
